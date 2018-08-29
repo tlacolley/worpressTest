@@ -19,13 +19,12 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
-            <section class="section01">
 
 
         <?php
         $cat = array(2,3);
         foreach ($cat as $cat_id): ?>
-        <section>
+        <section class="categorySec">
 
         <?php
         $cat = get_category($cat_id);
@@ -34,8 +33,24 @@ get_header();
         $args  = array('category' => $cat_id );
         $myposts = get_posts( $args );?>
         <h2> <?php  echo $cat->cat_name; ?></h2>
+        <ul>
         <?php
         foreach ( $myposts as $post ) : setup_postdata( $post ); ?>
+        <?php
+        $postid = get_the_ID();
+        if ( get_post_custom_keys($postid)[2]) :?>
+        <?php
+         // the_meta(); ?>
+        <?php $customFielsId = get_post_custom_keys($postid)[2]; ?>
+         <h3> <?= $customFielsId; ?> </h3>
+        <?php $valSkill =  get_post_meta(get_the_ID($post),$customFielsId,true);
+        // var_dump($customStyle)?>
+        <div class="levelGrey">
+            <div class="levelGreen" style="width:<?=$valSkill?>%">
+
+            </div>
+        </div>
+    <?php endif ?>
         <li>
             <?php
               get_template_part('template-parts/content-post');
@@ -43,10 +58,10 @@ get_header();
         </li>
         <?php endforeach;
 
-
         wp_reset_postdata();?>
-
+    </ul>
     </section>
+
     <?php endforeach ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->

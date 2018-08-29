@@ -22,49 +22,32 @@ get_header();
             <section class="section01">
 
 
+        <?php
+        $cat = array(2,3);
+        foreach ($cat as $cat_id): ?>
+        <section>
+
+        <?php
+        $cat = get_category($cat_id);
+        // var_dump($cat);
+        // print_r($cat);
+        $args  = array('category' => $cat_id );
+        $myposts = get_posts( $args );?>
+        <h2> <?php  echo $cat->cat_name; ?></h2>
+        <?php
+        foreach ( $myposts as $post ) : setup_postdata( $post ); ?>
+        <li>
             <?php
-            $category_id = 2;
-            $cat = get_category($category_id);
-            // var_dump($cat);
-            // print_r($cat);
-            $args  = array('category' => $category_id );
-            $myposts = get_posts( $args );?>
-            <h2> <?php  echo $cat->cat_name; ?></h2>
-            <?php
-            foreach ( $myposts as $post ) : setup_postdata( $post ); ?>
-            <li>
-                <?php the_title('<h4>','</h4>'); ?>
-                <?php the_content('<p>','</p>'); ?>
-            </li>
-            <?php endforeach;
+              get_template_part('template-parts/content-post');
+             ?>
+        </li>
+        <?php endforeach;
 
 
-            wp_reset_postdata();?>
-        </section>
-        <section class="section02">
-            <?php
-            $category_id = 3;
-            $cat = get_category($category_id);
-            // var_dump($cat);
-            // print_r($cat);
-            $args  = array('category' => $category_id );
-            $myposts = get_posts( $args );?>
-            <h2> <?php  echo $cat->cat_name; ?></h2>
-            <?php
-            foreach ( $myposts as $post ) : setup_postdata( $post ); ?>
-            <li>
-                <?php the_title('<h4>','</h4>'); ?>
-                <?php the_content('<p>','</p>'); ?>
-            </li>
-            <?php endforeach;
+        wp_reset_postdata();?>
 
-
-            wp_reset_postdata();?>
-
-        </section>
-
-
-
+    </section>
+    <?php endforeach ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
